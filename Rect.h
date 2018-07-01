@@ -19,9 +19,9 @@ class Rect {
 
             ALLEGRO_BITMAP *bmp = NULL;
 
-            Rect();           
+            Rect(ALLEGRO_BITMAP*);           
 
-            Rect(float, float, bool, float, float);
+            Rect(ALLEGRO_BITMAP*,float, float, bool, float, float, ALLEGRO_COLOR);
 
             void addYPos(float);
      
@@ -38,7 +38,8 @@ class Rect {
             float getXPos() { return xpos; }
        
             void setPos(float, float);
-
+            
+            void draw(int);
 
 };
 

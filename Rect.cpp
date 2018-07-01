@@ -1,15 +1,24 @@
 #include "Rect.h"
 
-Rect::Rect(){
-  vertical = true;
-  setDimensions(100, 32);
-  setPos(100, 100);
+Rect::Rect(ALLEGRO_BITMAP *backBuffer){
+    vertical = true;
+    setDimensions(100, 32);
+    setPos(100, 100);
+    bmp = al_create_bitmap(length,width);
+    al_set_target_bitmap(bmp);
+    al_clear_to_color(al_map_rgb(255,255,255));
+    al_set_target_bitmap(backBuffer);
 }
 
-Rect::Rect(float lgth, float wdth, bool vrtcl, float xps, float yps){
-    vertical = vrtcl ;
-    setDimensions(lgth, wdth);
-    setPos(xps, yps); 
+Rect::Rect(ALLEGRO_BITMAP *backBuffer, float lgth, float wdth, bool vrtcl,
+    float xps, float yps, ALLEGRO_COLOR color){
+        vertical = vrtcl;
+        setDimensions(lgth, wdth);
+        setPos(xps, yps);
+        bmp = al_create_bitmap(getLength(),getWidth());
+        al_set_target_bitmap(bmp);
+        al_clear_to_color(color);
+        al_set_target_bitmap(backBuffer);
 }
 
 void Rect::setDimensions(float lgth, float wdth){
@@ -42,4 +51,8 @@ float Rect::getWidth(){
         return length;
     else
         return width;
+}
+
+void Rect::draw(int flags){
+    al_draw_bitmap(bmp, getXPos(), getYPos(), flags);
 }
