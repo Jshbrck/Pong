@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(System sys) : p1(al_get_backbuffer(sys.display), playerLength, playerWidth, true, p1X, p1Y,al_color_name("white"), p2(al_get_backbuffer(sys.display), playerLength, playerWidth, true, p2X, p2Y,al_color_name("white") {
+Game::Game(System sys) : p1(al_get_backbuffer(sys.display), playerLength, playerWidth, true, p1X, p1Y,al_color_name("white"), p2(al_get_backbuffer(sys.display), playerLength, playerWidth, true, p2X, p2Y,al_color_name("white"), ball(ballRadius,ballX,ballY,ballXSpeed,ballYSpeed) {
 
     playerLength = 90;
     playerWidth = 10;
@@ -8,9 +8,14 @@ Game::Game(System sys) : p1(al_get_backbuffer(sys.display), playerLength, player
     p1Y = sys.getScreenHeight() * .40;
     p2X = sys.getScreenWidth() * .95;
     p2Y = sys.getScreenHeight() * .40;
+    ballRadius = 9;
+    ballX = sys.getScreenWidth()*.5;
+    ballY = sys.getScreenHeight()*.5;
+    ballXSpeed = 4;
+    ballYspeed = 4;
 }
 
-void GameLoop(System sys){
+void Game::GameLoop(System sys){
 
 }
 

@@ -1,7 +1,6 @@
 #ifndef DOT_H
 #define DOT_H
 #include <allegro5/allegro.h>
-#include <queue>
 
 class Dot {
 
@@ -26,37 +25,39 @@ class Dot {
             void setPos(float, float);
             
         public:
-              Dot();
+            Dot();
 
-              Dot(float, float, float, float, float);
+            Dot(float, float, float, float, float);
+                
+            void draw();
 
-              void addXPos(float);
+            void addXPos(float);
 
-              void addYPos(float);
+            void addYPos(float);
 
-              void addYSpeed(float);
+            void addYSpeed(float);
 
-              void addXSpeed(float);
-  
-              void setXSpeed(float);
-              
-              void setYSpeed(float);
+            void addXSpeed(float);
 
-              void setPreviousPos(float,float);
+            void setXSpeed(float);
+            
+            void setYSpeed(float);
 
-              float getPreviousXPos() {return previous_xpos;}
+            void setPreviousPos(float,float);
 
-              float getPreviousYPos() {return previous_ypos;}
-             
-              float getXPos() {return xpos;};
+            float getPreviousXPos() {return previous_xpos;}
 
-              float getYPos() {return ypos;};
+            float getPreviousYPos() {return previous_ypos;}
+           
+            float getXPos() {return xpos;};
 
-              float getRadius() {return radius;}
+            float getYPos() {return ypos;};
 
-              float getXSpeed() {return xSpeed;}
+            float getRadius() {return radius;}
 
-              float getYSpeed() {return ySpeed;}
+            float getXSpeed() {return xSpeed;}
+
+            float getYSpeed() {return ySpeed;}
 
 };
 

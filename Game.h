@@ -4,6 +4,7 @@
 #include "Dot.h"
 #include "Rect.h"
 
+
 class Game{
     private:
         float playerLength,playerWidth;
@@ -11,7 +12,8 @@ class Game{
         Rect p1;
         float p2X, p2Y;
         Rect p2;
-        float ballX, ballY;
+        float ballX, ballY, ballXSpeed, ballYSpeed;
+        Dot ball;
         float ballRadius;
         bool boxCollision(float,float,float,float,float,float,float,float);
     public:
