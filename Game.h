@@ -7,21 +7,22 @@
 
 class Game{
     private:
-        float playerLength,playerWidth;
-        float p1X, p1Y;
         Rect p1;
-        float p2X, p2Y;
         Rect p2;
-        float ballX, ballY, ballXSpeed, ballYSpeed;
         Dot ball;
-        float ballRadius;
+        enum KEYS {UP,DOWN,W,S};
+        bool key[4] = {false, false, false, false};
+        bool redraw;
+        void eventChecker(System*, ALLEGRO_EVENT*);
+        void gameLogic(System*);
         bool boxCollision(float,float,float,float,float,float,float,float);
     public:
-        Game(System);
-        Game(System,float,float,float,float,float,float,float,float,float);
-        void initGameLoop(System);
-        void GameLoop(System);
-}
+        Game(System*);
+        //Game(System,float,float,float,float,float,float,float,float,float);
+        void initGameLoop(System*);
+        void GameLoop(System*);
+        bool doexit;
+};
 
 
 #endif

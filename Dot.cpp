@@ -1,5 +1,5 @@
 #include "Dot.h"
-#include <allegro5/allegro.h>
+#include <allegro5/allegro_primitives.h>
 
 Dot::Dot(){
     setRadius(1);
@@ -14,6 +14,10 @@ Dot::Dot(float rad, float x, float y, float sx, float sy){
     setXSpeed(sx);
     setYSpeed(sy);
 
+}
+
+void Dot::draw(){
+    al_draw_filled_circle(xpos,ypos,radius,al_map_rgb(255,255,255));
 }
 
 void Dot::setPreviousPos(float x, float y){

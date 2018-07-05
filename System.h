@@ -10,8 +10,9 @@ class System{
         int SCREEN_H;
         int FPS;
         bool error;
+        void initFailBox(ALLEGRO_DISPLAY *d, std::string s); 
+        void setError(bool e) { error = e; }
     public:
-        void initFailBox(ALLEGRO_DISPLAY *d, std::string s);
         ALLEGRO_DISPLAY *display = NULL;
         ALLEGRO_TIMER *timer = NULL;
         ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -21,7 +22,6 @@ class System{
         int getScreenHeight() { return SCREEN_H; }
         int getFPS() { return FPS; }
         bool isError() { return error; }
-        void setError(bool e) { error = e; }
         ~System();
 };        
          
