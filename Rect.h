@@ -1,6 +1,8 @@
 #ifndef RECT_H
 #define RECT_H
 #include <allegro5/allegro.h>
+
+
 class Rect {
 
 
@@ -11,6 +13,7 @@ class Rect {
             bool  vertical;
             float xpos;
             float ypos;
+            float midCoors[2];
             void setDimensions(float, float);
          
             
@@ -36,7 +39,9 @@ class Rect {
             float getYPos()   { return ypos; }
            
             float getXPos() { return xpos; }
-       
+            
+            float* getMidCoors();
+             
             void setPos(float, float);
             
             void draw(int);

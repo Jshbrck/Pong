@@ -1,59 +1,43 @@
 #include "Dot.h"
 #include <allegro5/allegro_primitives.h>
+#include <math.h>
 
 Dot::Dot(){
-    setRadius(1);
+    this->radius = 1;
+    this->speed = 1;
     setPos(10,10);
-    setXSpeed(1);
-    setYSpeed(1);
-}   
+    setVelocity(1,-1);
+}
 
-Dot::Dot(float rad, float x, float y, float sx, float sy){
-    setRadius(rad);
+Dot::Dot(float rad, float speed, float x, float y, float vx, float vy){
+    this->radius = rad;
+    this->speed = speed;
     setPos(x,y);
-    setXSpeed(sx);
-    setYSpeed(sy);
+    setVelocity(vx,vy);
 
 }
 
 void Dot::draw(){
-    al_draw_filled_circle(xpos,ypos,radius,al_map_rgb(255,255,255));
-}
-
-void Dot::setPreviousPos(float x, float y){
-     previous_xpos = x;
-     previous_ypos = y;
-}
-
-void Dot::setRadius(float rad){
-    radius = rad;
+    al_draw_filled_circle(x,y,radius,al_map_rgb(255,255,255));
 }
 
 void Dot::setPos(float x, float y){
-    xpos = x;
-    ypos = y;
+    this->x = x;
+    this->y = y;
 }
 
-void Dot::addXPos(float x){
-    xpos += x;
+void Dot::move(float dt){
+    this->x += vx * dt;
+    this->y += vy * dt;
 }
 
-void Dot::addYPos(float y){
-    ypos += y;
+void Dot::multiplyVelocity(float a, float b){
+    this->vx*=a;
+    this->vy*=b;
 }
 
-void Dot::setXSpeed(float s){
-    xSpeed = s;
-}
-
-void Dot::setYSpeed(float s){
-    ySpeed = s;
-}
-
-void Dot::addXSpeed(float s){
-   xSpeed += s;
-}
-
-void Dot::addYSpeed(float s){
-   ySpeed += s;
+void Dot::setVelocity(float nVX, float nVY){
+    float norm = sqrt(nVX*nVX + nVY*nVY);
+    this->vx = this->speed * nVX/norm;
+    this->vy = this->speed * nVY/norm;
 }

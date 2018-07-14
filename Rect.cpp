@@ -39,6 +39,19 @@ void Rect::addYPos(float yps){
     ypos += yps;
 }
 
+float* Rect::getMidCoors(){
+    if(vertical){
+        midCoors[0] = width/2 + xpos;
+        midCoors[1] = length/2 + ypos;          
+        return midCoors;
+    }
+    else{
+        midCoors[0] = length/2 + xpos;
+        midCoors[1] = width/2 + ypos;
+        return midCoors;
+    }
+}
+
 float Rect::getLength(){
     if(vertical)
         return width;
