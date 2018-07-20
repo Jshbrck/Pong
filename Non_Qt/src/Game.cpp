@@ -14,8 +14,27 @@ Game::Game(System *sys) : p1(al_get_backbuffer(sys->display), 90, 10, true, sys-
     redraw = true;
     doexit = false;
     aiBounced = false; 
+    d = N;
 }
 
+Game::Game(System *sys, char *diff) : p1(al_get_backbuffer(sys->display), 90, 10, true, sys->getScreenWidth()*.05, sys->getScreenHeight()*.40,al_color_name("white")),
+                          p2(al_get_backbuffer(sys->display), 90, 10, true, sys->getScreenWidth()*.95, sys->getScreenHeight()*.40,al_color_name("white")), 
+                          ball(9,2.6,sys->getScreenWidth()*.5,sys->getScreenHeight()*.5,1,-1) {
+
+    redraw = true;
+    doexit = false;
+    aiBounced = false;
+    if(*diff == 'E'){
+        d = EASY;  
+    }
+    else if(*diff == 'M'){
+        d = MEDIUM;
+    }
+    else if(*diff == 'H'){
+        d = HARD;
+    }
+     
+}
 
 
 bool Game::boxCollision(float x1, float y1, float length1, float width1, float x2, float y2, float length2, float width2){
@@ -76,7 +95,7 @@ void Game::collisionLogic(System *sys){
         }
 }
 
-void Game::aiLogic(System *sys){
+void Game::aiLogic(System *sys,Difficulty d){
     if(ball.getXPos() > sys->getScreenWidth() *.5 && !aiBounced){
         if (ball.getYPos() > p2.getYPos() && p2.getYPos() < sys->getScreenHeight() - p2.getWidth()){
             p2.addYPos(sys->getFPS()/6);
@@ -102,7 +121,7 @@ void Game::errorRecovery(System *sys){
         resetGame(sys);
         
     }
-    else if(ball.getYPos() <= -1){
+    else if(ball.getYPos() <= -5){
         std::cerr << "Ball stuck, reset game." << std::endl;
         usleep(3000000);
         resetGame(sys);
@@ -113,18 +132,28 @@ void Game::gameLogic(System *sys){
     
     ball.move(ball.getSpeed());    
     collisionLogic(sys);     
-    aiLogic(sys);  
     errorRecovery(sys);
-  //  if(key[UP] && p2.getYPos() >= 10.0) {
-  //      p2.addYPos(-10.0);
-  //  }
-  //  if(key[DOWN] && p2.getYPos() <= sys->getScreenHeight() - p2.getWidth()) {
-  //      p2.addYPos(10.0);
-  //  }
 
+    //Should use AI?
+    if(d == EASY || d == MEDIUM || d == HARD){
+        aiLogic(sys,d);  
+    }
+    //No AI
+    else{
+        //Right paddle up
+        if(key[UP] && p2.getYPos() > 10.0) {
+            p2.addYPos(-10.0);
+        }
+        //Right paddle down
+        if(key[DOWN] && p2.getYPos() < sys->getScreenHeight() - p2.getWidth()) {
+            p2.addYPos(10.0);
+        }
+    }
+    //Left paddle up
     if(key[W] && p1.getYPos() > 10.0) {
         p1.addYPos(-sys->getFPS()/6);
     }
+    //left paddle down
     if(key[S] && p1.getYPos() < sys->getScreenHeight() - p1.getWidth()) {
         p1.addYPos(sys->getFPS()/6);
 
