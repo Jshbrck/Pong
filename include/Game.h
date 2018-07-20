@@ -16,11 +16,15 @@ class Game{
         enum State {MAIN_MENU, NEW_GAME, GAME, PAUSE, END};
         State curState;
         bool redraw;
+        bool aiBounced;
         void eventChecker(System*, ALLEGRO_EVENT*);
         void gameLogic(System*);
         void resetGame(System*);
         bool boxCollision(float,float,float,float,float,float,float,float);
         float paddleReflection(Rect*, Dot*);
+        void collisionLogic(System*);
+        void aiLogic(System*);
+        void errorRecovery(System*);
     public:
         Game(System*);
         void initGameLoop(System*);

@@ -5,13 +5,15 @@
 #include <math.h>
 #include <stdlib.h> 
 #include <iostream>
+#include <unistd.h>
 
 Game::Game(System *sys) : p1(al_get_backbuffer(sys->display), 90, 10, true, sys->getScreenWidth()*.05, sys->getScreenHeight()*.40,al_color_name("white")),
                           p2(al_get_backbuffer(sys->display), 90, 10, true, sys->getScreenWidth()*.95, sys->getScreenHeight()*.40,al_color_name("white")), 
                           ball(9,2.6,sys->getScreenWidth()*.5,sys->getScreenHeight()*.5,1,-1) {
 
     redraw = true;
-    doexit = false; 
+    doexit = false;
+    aiBounced = false; 
 }
 
 
@@ -33,59 +35,98 @@ float Game::paddleReflection(Rect* player, Dot* ball){
     return 2.5 * normed;
 }
 
+void Game::collisionLogic(System *sys){
+        //Top of Screen
+        if(ball.getYPos() >= sys->getScreenHeight() - ball.getRadius()){
+            ball.multiplyVelocity(1,-1);
+        }
+    
+        //Bottom of Screen
+        if(ball.getYPos() <= 0 + ball.getRadius()){
+           ball.multiplyVelocity(1,-1);       
+        }
+        
+        //Right of Screen
+        if(ball.getXPos() >= sys->getScreenWidth() - ball.getRadius()){
+            resetGame(sys);
+            scores[1] += 1;
+            std::cout << "Left Score: "<<scores[1] << "\n";
+            if(scores[1] == 5){curState = END;}
+        }
+    
+        //Left of Screen
+        if(ball.getXPos() <= 0 + ball.getRadius()){
+            resetGame(sys);
+            scores[0] += 1;
+            std::cout << "Right Score: "<<scores[0] << "\n";
+            if(scores[0] == 5){curState = END;}
+        }
+        //Left Paddle Collision
+        if(boxCollision(ball.getXPos(),ball.getYPos(),ball.getRadius(),ball.getRadius(),p1.getXPos(),p1.getYPos(),p1.getLength(),p1.getWidth())) { 
+            ball.setVelocity(1,-paddleReflection(&p1,&ball));
+            ball.addSpeed(.05);
+            aiBounced = false;
+        }
+        
+        //Right Paddle Collision
+        if(boxCollision(ball.getXPos(),ball.getYPos(),ball.getRadius(),ball.getRadius(),p2.getXPos(),p2.getYPos(),p2.getLength(),p2.getWidth())) { 
+            ball.setVelocity(-1,-paddleReflection(&p2,&ball));
+            ball.addSpeed(.05);
+            aiBounced = true;
+        }
+}
+
+void Game::aiLogic(System *sys){
+    if(ball.getXPos() > sys->getScreenWidth() *.5 && !aiBounced){
+        if (ball.getYPos() > p2.getYPos() && p2.getYPos() < sys->getScreenHeight() - p2.getWidth()){
+            p2.addYPos(sys->getFPS()/6);
+        }
+        else if(ball.getYPos() < p2.getYPos() && p2.getYPos() > 10){
+            p2.addYPos(-sys->getFPS()/6);
+        }
+    }
+    else if(ball.getXPos() < sys->getScreenWidth() *.5 || aiBounced){
+        if(p2.getYPos() > sys->getScreenHeight() *.5){
+            p2.addYPos(-sys->getFPS()/6);
+        }
+        else if(p2.getYPos() < sys->getScreenHeight() *.5){
+            p2.addYPos(sys->getFPS()/6);
+        }
+    }
+}
+
+void Game::errorRecovery(System *sys){
+    if(ball.getYPos() >= sys->getScreenHeight()){
+        std::cerr << "Ball stuck, reset game." << std::endl;
+        usleep(3000000);
+        resetGame(sys);
+        
+    }
+    else if(ball.getYPos() <= -1){
+        std::cerr << "Ball stuck, reset game." << std::endl;
+        usleep(3000000);
+        resetGame(sys);
+    }   
+}
+
 void Game::gameLogic(System *sys){
     
     ball.move(ball.getSpeed());    
-        
-    //Top of Screen
-    if(ball.getYPos() >= sys->getScreenHeight() - ball.getRadius()){
-        ball.multiplyVelocity(1,-1);
-    }
+    collisionLogic(sys);     
+    aiLogic(sys);  
+    errorRecovery(sys);
+  //  if(key[UP] && p2.getYPos() >= 10.0) {
+  //      p2.addYPos(-10.0);
+  //  }
+  //  if(key[DOWN] && p2.getYPos() <= sys->getScreenHeight() - p2.getWidth()) {
+  //      p2.addYPos(10.0);
+  //  }
 
-    //Bottom of Screen
-    if(ball.getYPos() <= 0 + ball.getRadius()){
-       ball.multiplyVelocity(1,-1);       
+    if(key[W] && p1.getYPos() > 10.0) {
+        p1.addYPos(-sys->getFPS()/6);
     }
-    
-    //Right of Screen
-    if(ball.getXPos() >= sys->getScreenWidth() - ball.getRadius()){
-        resetGame(sys);
-        scores[1] += 1;
-        std::cout << scores[1] << "\n";
-        if(scores[1] == 5){curState = END;}
-    }
-
-    //Left of Screen
-    if(ball.getXPos() <= 0 + ball.getRadius()){
-        resetGame(sys);
-        scores[0] += 1;
-        std::cout << scores[0] << "\n";
-        if(scores[0] == 5){curState = END;}
-    }
-    //Left Paddle Collision
-    if(boxCollision(ball.getXPos(),ball.getYPos(),ball.getRadius(),ball.getRadius(),p1.getXPos(),p1.getYPos(),p1.getLength(),p1.getWidth())) { 
-        ball.setVelocity(1,-paddleReflection(&p1,&ball));
-        ball.addSpeed(.05);
-    }
-    
-    //Right Paddle Collision
-    if(boxCollision(ball.getXPos(),ball.getYPos(),ball.getRadius(),ball.getRadius(),p2.getXPos(),p2.getYPos(),p2.getLength(),p2.getWidth())) { 
-        ball.setVelocity(-1,-paddleReflection(&p2,&ball));
-        ball.addSpeed(.05);
-    }
-
-    if(key[UP] && p2.getYPos() >= 10.0) {
-        p2.addYPos(-10.0);
-    }
-    if(key[DOWN] && p2.getYPos() <= sys->getScreenHeight() - p2.getWidth()) {
-        p2.addYPos(10.0);
-    }
-
-    if(key[W] && p1.getYPos() >= 10.0) {
-        p1.addYPos(-10.0);
-    }
-    if(key[S] && p1.getYPos() <= sys->getScreenHeight() - p1.getWidth()) {
-        p1.addYPos(10.0);
+    if(key[S] && p1.getYPos() < sys->getScreenHeight() - p1.getWidth()) {
+        p1.addYPos(sys->getFPS()/6);
 
     }
     redraw = true;
@@ -100,6 +141,8 @@ void Game::eventChecker(System *sys,ALLEGRO_EVENT *ev){
         else if(curState == END){
             al_clear_to_color(al_color_name("black"));
             al_flip_display();
+            if(scores[0] == 5){std::cout << "Right Wins" << std::endl;}
+            else if(scores[1] == 5){std::cout << "Left Wins" << std::endl;}
         }
             
      }
@@ -168,12 +211,15 @@ void Game::resetGame(System *sys){
     double v1 = (rand() % 30 + 1);
     srand(time(NULL));
     double v2 = (rand() % 20 - 10);
-    if(direction == 0){ball.setVelocity(v1,v2);}
-    else if(direction == 1){ball.setVelocity(-v1,v2);}
+//    if(direction == 0){
+ball.setVelocity(v1,v2);
+//}
+//    else if(direction == 1){ball.setVelocity(-v1,v2);}
     ball.setSpeed(2.6);
     ball.setPos(sys->getScreenWidth()*.5,sys->getScreenHeight()*.5);
     p1.setPos(sys->getScreenWidth()*.05, sys->getScreenHeight()*.4);
     p2.setPos(sys->getScreenWidth()*.95, sys->getScreenHeight()*.4);
+    aiBounced = false;
 }
 
 
