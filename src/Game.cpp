@@ -1,6 +1,6 @@
-#include <allegro5/allegro_primitives.h>
+#include <../include/allegro5/allegro_primitives.h>
 #include "Game.h"
-#include <allegro5/allegro_color.h>
+#include <../include/allegro5/allegro_color.h>
 #include <time.h>
 #include <math.h>
 #include <stdlib.h> 

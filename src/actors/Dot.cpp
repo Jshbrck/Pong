@@ -1,5 +1,5 @@
 #include "Dot.h"
-#include <allegro5/allegro_primitives.h>
+#include <../include/allegro5/allegro_primitives.h>
 #include <math.h>
 
 Dot::Dot(){

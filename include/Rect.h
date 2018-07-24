@@ -1,6 +1,6 @@
 #ifndef RECT_H
 #define RECT_H
-#include <allegro5/allegro.h>
+#include <../include/allegro5/allegro.h>
 
 
 class Rect {
