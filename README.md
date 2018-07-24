@@ -5,17 +5,15 @@ Prerequisites
 -------------
 First an install of Allegro 5.2 is required for pong to run. Execute the following commands to install Allegro 5.2
 
+If you have Root Privileges:
 ```shell
 sudo add-apt-repository ppa:allegro/5.2
 sudo apt-get update
 sudo apt-get install liballegro5-dev
 ```
+Otherwise:
+(WIP)
 
-We also need CMake.
-```shell
-sudo apt-get update
-sudo apt-get install cmake
-```
 
 Compiling
 ---------
