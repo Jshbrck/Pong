@@ -132,7 +132,7 @@ void Game::gameLogic(System *sys){
     
     ball.move(ball.getSpeed());    
     collisionLogic(sys);     
-    errorRecovery(sys);
+//    errorRecovery(sys);
 
     //Should use AI?
     if(d == EASY || d == MEDIUM || d == HARD){
@@ -162,6 +162,9 @@ void Game::gameLogic(System *sys){
 }
 
 void Game::eventChecker(System *sys,ALLEGRO_EVENT *ev){
+    if(ev->type == ALLEGRO_EVENT_DISPLAY_CLOSE){
+        doexit = true;
+    }
     if(ev->type == ALLEGRO_EVENT_TIMER){ 
         if(curState == GAME){
             gameLogic(sys);
@@ -212,10 +215,6 @@ void Game::eventChecker(System *sys,ALLEGRO_EVENT *ev){
                     key[S] = false;
                     break;
 
-                case ALLEGRO_KEY_ESCAPE:
-                    doexit = true;
-                    break;
-                
                 case ALLEGRO_KEY_SPACE:
                     if(curState == PAUSE){curState = GAME;}
                     else if(curState == GAME){curState = PAUSE;}
