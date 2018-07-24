@@ -10,7 +10,7 @@ int main(int argc, char **argv){
     
     //singleplayer, passed argument is used to determine difficulty of AI
     if(argc == 2){
-        Game pong(&sys,argv[2]); 
+        Game pong(&sys,argv[1]); 
         pong.initGameLoop(&sys);
         while(!pong.doexit){
             pong.GameLoop(&sys);
