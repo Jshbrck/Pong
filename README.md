@@ -35,3 +35,4 @@ Controls
 --------
 
 The W/S keys control the left bumper, while the Up/Down arrow keys control the right bumper. 
+The Space Bar also pauses the game.
