@@ -11,6 +11,12 @@ sudo apt-get update
 sudo apt-get install liballegro5-dev
 ```
 
+We also need CMake.
+```shell
+sudo apt-get update
+sudo apt-get install cmake
+```
+
 Compiling
 ---------
 Pong uses a CMake build system and it is consequently recommended to use an 
