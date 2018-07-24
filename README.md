@@ -1,6 +1,16 @@
 # Pong
 An implementation of pong written in C++ using the Allegro 5 framework.
 
+Prerequisites
+-------------
+First an install of Allegro 5.2 is required for pong to run. Execute the following commands to install Allegro 5.2
+
+```shell
+sudo add-apt-repository ppa:allegro/5.2
+sudo apt-get update
+sudo apt-get install liballegro5-dev
+```
+
 Compiling
 ---------
 Pong uses a CMake build system and it is consequently recommended to use an 
