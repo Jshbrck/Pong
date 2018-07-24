@@ -8,7 +8,6 @@ project("Pong")
 
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
-link_directories("${CMAKE_CURRENT_SOURCE_DIR}/lib")
 
 add_subdirectory(src)
 add_executable(pong pong.cpp)

@@ -2,7 +2,7 @@
 #define SYSTEM_H
 
 #include <string>
-#include <../include/allegro5/allegro.h>
+#include <allegro5/allegro.h>
 
 class System{
     private:
