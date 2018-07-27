@@ -6,6 +6,7 @@
 //  if no AI flag, game assumes two player
 int main(int argc, char **argv){
     System sys;
+    int t = 1;
     if(sys.isError()){return 0;}
     
     //singleplayer, passed argument is used to determine difficulty of AI

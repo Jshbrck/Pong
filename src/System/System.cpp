@@ -1,8 +1,8 @@
 #include "System.h"
 #include <iostream>
-#include <allegro5/allegro_native_dialog.h>
-#include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_image.h>
+#include <native_dialog/allegro5/allegro_native_dialog.h>
+#include <primitives/allegro5/allegro_primitives.h>
+#include <image/allegro5/allegro_image.h>
 
 
 

@@ -1,0 +1,9 @@
+# Hashes of file build rules.
+9187c6b2e8c5e80ccb92a82683fa5ac9 tests/CMakeFiles/run_tests
+985f346034e90dfb6aabe47e782a2d56 tests/CMakeFiles/run_tests_d3d
+80d40d06606df391fa154427d45db534 tests/CMakeFiles/run_tests_gl
+8009c0538524502545b5895d0e602888 tests/CMakeFiles/run_tests_gl12
+31eff0156d1f5fecf714c40567a846d3 tests/CMakeFiles/run_tests_gl20
+570d8e4f10bdcdecc2455625af8731a7 tests/CMakeFiles/run_tests_shaders
+87373d89355109d742930d112bd678b8 tests/CMakeFiles/run_tests_wine
+c3d0bdd6a4a9cc664f97793b327f1ae4 tests/CMakeFiles/run_tests_wine_gl
