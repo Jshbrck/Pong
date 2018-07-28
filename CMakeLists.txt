@@ -10,6 +10,7 @@ project("Pong")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/allegro_lib/include")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/allegro_lib/addons")
+link_directories("${CMAKE_CURRENT_SOURCE_DIR}/allegro_lib/lib/")
 
 add_subdirectory(src)
 add_executable(pong pong.cpp)
