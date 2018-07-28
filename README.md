@@ -4,6 +4,7 @@ An implementation of pong written in C++ using the Allegro 5 framework.
 Prerequisites
 -------------
 The only program required is cmake. Allegro 5 is now bundled with pong.
+Version 5.2.4 of Allegro is bundled with Pong to facilitate easy compilation.
 
 Compiling
 ---------
